@@ -10,11 +10,9 @@
 #include <cmath>
 #include <vector>
 #include <cstdint>
+#include <unistd.h>
 
 namespace flow {
-
-#define MAX_INPUT_PORTS 10
-#define MAX_OUTPUT_PORTS 10
 
 // template <typename T>
 class Arc {
@@ -41,6 +39,36 @@ private:
         bool full;
 };
 
+class Port {
+public:
+        Port (uint8_t arcNo) : arcNo (arcNo), arcs (new Arc *[arcNo]) {}
+        ~Port () { delete[] arcs; }
+
+        bool isAllFree () const;
+        void put (int i);
+
+        // private:
+        uint8_t arcNo;
+        Arc **arcs;
+};
+
+bool Port::isAllFree () const
+{
+        for (int i = 0; i < arcNo; ++i) {
+                if (arcs[i]->isFull ()) {
+                        return false;
+                }
+        }
+        return true;
+}
+
+void Port::put (int v)
+{
+        for (int i = 0; i < arcNo; ++i) {
+                arcs[i]->put (v);
+        }
+}
+
 struct INode {
         virtual ~INode () {}
         virtual void process () = 0;
@@ -66,10 +94,10 @@ template <uint8_t INPUTS_NO> struct RequireAllFull {
 
 // TODO specjalizacja dla 1
 template <uint8_t OUTPUTS_NO> struct RequireAllFree {
-        static bool check (Arc *const *inputs)
+        static bool check (Port *const *inputs)
         {
                 for (int i = 0; i < OUTPUTS_NO; ++i) {
-                        if (inputs[i]->isFull ()) {
+                        if (!inputs[i]->isAllFree ()) {
                                 return false;
                         }
                 }
@@ -78,7 +106,7 @@ template <uint8_t OUTPUTS_NO> struct RequireAllFree {
         }
 };
 
-template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy> class AbstractNode : public INode {
+template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy = RequireAllFull<INPUTS_NO>> class AbstractNode : public INode {
 public:
         virtual ~AbstractNode () {}
         virtual bool inputsOk () const { return InputStrategy::check (inputs); }
@@ -86,7 +114,7 @@ public:
 
         // protected:
         Arc *inputs[INPUTS_NO];
-        Arc *outputs[OUTPUTS_NO];
+        Port *outputs[OUTPUTS_NO];
 };
 
 class Add : public AbstractNode<2, 1, RequireAllFull<2>> {
@@ -98,10 +126,10 @@ class Source : public INode {
 public:
         virtual ~Source () {}
         bool inputsOk () const { return true; }
-        bool outputsOk () const { return !output->isFull (); }
+        bool outputsOk () const { return output->isAllFree(); }
 
         // protected:
-        Arc *output;
+        Port *output;
 };
 
 class Const : public Source {
@@ -127,7 +155,11 @@ public:
 class Console : public Sink {
 public:
         virtual ~Console () {}
-        void process () { std::cerr << input->get () << std::endl; }
+        void process ()
+        {
+                //                sleep (1);
+                std::cerr << input->get () << std::endl;
+        }
 };
 }
 
@@ -147,15 +179,21 @@ int main (int argc, char **argv)
         nodes.push_back (&c2);
 
         flow::Arc a1;
-        c1.output = &a1;
+        flow::Port p1 (1);
+        p1.arcs[0] = &a1;
+        c1.output = &p1;
         a.inputs[0] = &a1;
 
         flow::Arc a2;
-        c2.output = &a2;
+        flow::Port p2 (1);
+        p2.arcs[0] = &a2;
+        c2.output = &p2;
         a.inputs[1] = &a2;
 
         flow::Arc a3;
-        a.outputs[0] = &a3;
+        flow::Port p3 (1);
+        p3.arcs[0] = &a3;
+        a.outputs[0] = &p3;
         l.input = &a3;
 
         while (true) {
