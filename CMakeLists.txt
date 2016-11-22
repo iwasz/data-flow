@@ -62,6 +62,22 @@ endif()
 
 SET (SOURCES
         "src/main.cc"
+        "src/core/Core.h"
+        "src/core/Arc.cc"
+        "src/core/Arc.h"
+        "src/core/Port.cc"
+        "src/core/Port.h"
+        "src/core/INode.h"
+        "src/core/IOPolicy.h"
+        "src/core/AbstractNode.h"
+        "src/core/Source.h"
+        "src/core/Sink.h"
+        "src/core/CommonNodes.h"
+        "src/core/CommonNodes.cc"
+        "src/core/CommonSinks.h"
+        "src/core/CommonSinks.cc"
+        "src/core/CommonSources.h"
+        "src/core/CommonSources.cc"
 )
 
 # Local includes (inside project).
