@@ -24,8 +24,8 @@ public:
 
         int get ()
         {
-                return value;
                 full = false;
+                return value;
         }
 
         void put (int i)
@@ -124,7 +124,7 @@ public:
         {
                 int a = inputs[0]->get ();
                 int b = inputs[1]->get ();
-                std::cout << "[" << a << "] + [" << b << "] = [" << std::endl;
+                //                std::cout << "[" << a << "] + [" << b << "] = [" << std::endl;
                 outputs[0]->put (a + b);
         }
 };
@@ -169,7 +169,7 @@ public:
         virtual ~Console () {}
         void process ()
         {
-                //                sleep (1);
+                sleep (1);
                 std::cerr << input->get () << std::endl;
         }
 };
@@ -256,7 +256,7 @@ void fibonacci ()
         flow::Arc a5 (1);
         flow::Port p3 (2);
         p3.arcs[0] = &a4;
-        p3.arcs[0] = &a5;
+        p3.arcs[1] = &a5;
         a.outputs[0] = &p3;
 
         c1.inputs[0] = &a4;
