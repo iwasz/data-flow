@@ -14,6 +14,7 @@
 
 namespace flow {
 
+// TODO other types as well (along with strings).
 // template <typename T>
 class Arc {
 public:
@@ -125,7 +126,6 @@ public:
 
 class Add : public AbstractNode<2, 1, RequireAllFull<2>> {
 public:
-        // void process () { outputs[0]->put (inputs[0]->get () + inputs[1]->get ()); }
         void process () { outputs[0]->put (inputs[0]->get () + inputs[1]->get ()); }
 };
 
