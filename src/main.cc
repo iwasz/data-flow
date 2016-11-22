@@ -119,14 +119,26 @@ public:
 
 class Add : public AbstractNode<2, 1, RequireAllFull<2>> {
 public:
-        void process () { outputs[0]->put (inputs[0]->get () + inputs[1]->get ()); }
+        // void process () { outputs[0]->put (inputs[0]->get () + inputs[1]->get ()); }
+        void process ()
+        {
+                int a = inputs[0]->get ();
+                int b = inputs[1]->get ();
+                std::cout << "[" << a << "] + [" << b << "] = [" << std::endl;
+                outputs[0]->put (a + b);
+        }
+};
+
+class Copy : public AbstractNode<1, 1, RequireAllFull<1>> {
+public:
+        void process () { outputs[0]->put (inputs[0]->get ()); }
 };
 
 class Source : public INode {
 public:
         virtual ~Source () {}
         bool inputsOk () const { return true; }
-        bool outputsOk () const { return output->isAllFree(); }
+        bool outputsOk () const { return output->isAllFree (); }
 
         // protected:
         Port *output;
@@ -163,7 +175,18 @@ public:
 };
 }
 
-int main (int argc, char **argv)
+void run (flow::NodeVector *nodes)
+{
+        while (true) {
+                for (flow::INode *node : *nodes) {
+                        if (node->inputsOk () && node->outputsOk ()) {
+                                node->process ();
+                        }
+                }
+        }
+}
+
+void simpleAdd ()
 {
 
         flow::NodeVector nodes;
@@ -196,11 +219,53 @@ int main (int argc, char **argv)
         a.outputs[0] = &p3;
         l.input = &a3;
 
-        while (true) {
-                for (flow::INode *node : nodes) {
-                        if (node->inputsOk () && node->outputsOk ()) {
-                                node->process ();
-                        }
-                }
-        }
+        run (&nodes);
 }
+
+void fibonacci ()
+{
+
+        flow::NodeVector nodes;
+
+        flow::Copy c2;
+        flow::Copy c1;
+        flow::Add a;
+        flow::Console l;
+
+        nodes.push_back (&l);
+        nodes.push_back (&c1);
+        nodes.push_back (&a);
+        nodes.push_back (&c2);
+
+        // c2 górne
+        flow::Arc a1 (0);
+        flow::Port p1 (1);
+        p1.arcs[0] = &a1;
+        c2.outputs[0] = &p1;
+
+        // c1 dolne
+        flow::Arc a2 (1);
+        flow::Arc a3 (1);
+        flow::Port p2 (2);
+        p2.arcs[0] = &a2;
+        p2.arcs[1] = &a3;
+        c1.outputs[0] = &p2;
+
+        // add
+        flow::Arc a4;
+        flow::Arc a5 (1);
+        flow::Port p3 (2);
+        p3.arcs[0] = &a4;
+        p3.arcs[0] = &a5;
+        a.outputs[0] = &p3;
+
+        c1.inputs[0] = &a4;
+        c2.inputs[0] = &a2;
+        a.inputs[0] = &a1;
+        a.inputs[1] = &a3;
+        l.input = &a5;
+
+        run (&nodes);
+}
+
+int main (int argc, char **argv) { fibonacci (); }
