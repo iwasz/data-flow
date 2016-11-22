@@ -78,6 +78,8 @@ SET (SOURCES
         "src/core/CommonSinks.cc"
         "src/core/CommonSources.h"
         "src/core/CommonSources.cc"
+        "src/Program.h"
+        "src/Program.cc"
 )
 
 # Local includes (inside project).

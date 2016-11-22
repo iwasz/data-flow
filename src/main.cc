@@ -7,32 +7,24 @@
  ****************************************************************************/
 
 #include "core/Core.h"
+#include "Program.h"
 
-void run (flow::NodeVector *nodes)
-{
-        while (true) {
-                for (flow::INode *node : *nodes) {
-                        if (node->inputsOk () && node->outputsOk ()) {
-                                node->process ();
-                        }
-                }
-        }
-}
+
 
 void simpleAdd ()
 {
 
-        flow::NodeVector nodes;
+        flow::Program program;
 
         flow::Const c1 (2);
         flow::Const c2 (3);
         flow::Add a;
         flow::Console l;
 
-        nodes.push_back (&l);
-        nodes.push_back (&c1);
-        nodes.push_back (&a);
-        nodes.push_back (&c2);
+        program.addNode (&l);
+        program.addNode (&c1);
+        program.addNode (&a);
+        program.addNode (&c2);
 
         flow::Arc a1;
         flow::Port p1 (1);
@@ -52,23 +44,22 @@ void simpleAdd ()
         a.outputs[0] = &p3;
         l.input = &a3;
 
-        run (&nodes);
+        program.run ();
 }
 
 void fibonacci ()
 {
-
-        flow::NodeVector nodes;
+        flow::Program program;
 
         flow::Copy c2;
         flow::Copy c1;
         flow::Add a;
         flow::Console l;
 
-        nodes.push_back (&l);
-        nodes.push_back (&c1);
-        nodes.push_back (&a);
-        nodes.push_back (&c2);
+        program.addNode (&l);
+        program.addNode (&c1);
+        program.addNode (&a);
+        program.addNode (&c2);
 
         // c2 górne
         flow::Arc a1 (0);
@@ -98,7 +89,7 @@ void fibonacci ()
         a.inputs[1] = &a3;
         l.input = &a5;
 
-        run (&nodes);
+        program.run ();
 }
 
 int main (int argc, char **argv) { fibonacci (); }
