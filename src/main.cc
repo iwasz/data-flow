@@ -78,7 +78,6 @@ struct INode {
 
 typedef std::vector<INode *> NodeVector;
 
-// TODO specjalizacja dla 1
 template <uint8_t INPUTS_NO> struct RequireAllFull {
         static bool check (Arc *const *inputs)
         {
@@ -92,7 +91,10 @@ template <uint8_t INPUTS_NO> struct RequireAllFull {
         }
 };
 
-// TODO specjalizacja dla 1
+template <> struct RequireAllFull<1> {
+        static bool check (Arc *const *inputs) { return inputs[0]->isFull (); }
+};
+
 template <uint8_t OUTPUTS_NO> struct RequireAllFree {
         static bool check (Port *const *inputs)
         {
@@ -104,6 +106,10 @@ template <uint8_t OUTPUTS_NO> struct RequireAllFree {
 
                 return true;
         }
+};
+
+template <> struct RequireAllFree<1> {
+        static bool check (Port *const *inputs) { return inputs[0]->isAllFree (); }
 };
 
 template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy = RequireAllFull<INPUTS_NO>> class AbstractNode : public INode {
@@ -120,13 +126,7 @@ public:
 class Add : public AbstractNode<2, 1, RequireAllFull<2>> {
 public:
         // void process () { outputs[0]->put (inputs[0]->get () + inputs[1]->get ()); }
-        void process ()
-        {
-                int a = inputs[0]->get ();
-                int b = inputs[1]->get ();
-                //                std::cout << "[" << a << "] + [" << b << "] = [" << std::endl;
-                outputs[0]->put (a + b);
-        }
+        void process () { outputs[0]->put (inputs[0]->get () + inputs[1]->get ()); }
 };
 
 class Copy : public AbstractNode<1, 1, RequireAllFull<1>> {
