@@ -9,43 +9,17 @@
 #include "core/Core.h"
 #include "Program.h"
 
-
-
-void simpleAdd ()
-{
-
-        flow::Program program;
-
-        flow::Const c1 (2);
-        flow::Const c2 (3);
-        flow::Add a;
-        flow::Console l;
-
-        program.addNode (&l);
-        program.addNode (&c1);
-        program.addNode (&a);
-        program.addNode (&c2);
-
-        flow::Arc a1;
-        flow::Port p1 (1);
-        p1.arcs[0] = &a1;
-        c1.output = &p1;
-        a.inputs[0] = &a1;
-
-        flow::Arc a2;
-        flow::Port p2 (1);
-        p2.arcs[0] = &a2;
-        c2.output = &p2;
-        a.inputs[1] = &a2;
-
-        flow::Arc a3;
-        flow::Port p3 (1);
-        p3.arcs[0] = &a3;
-        a.outputs[0] = &p3;
-        l.input = &a3;
-
-        program.run ();
-}
+/*
+ * Dynamiczne API, czyli ułatwienia, które stosujemy na hoście :
+ * - łączenia nodów : kiedy dodaję output to alokacja pamięci.
+ * - Metody sprawdzające czy wejścia i wyjścia są połączone,
+ * - Czy połączenie się powiedzie (semantyka).
+ *
+ * Na targecie tego API ma nie być (albo function-sections usunie,
+ * albo zrobić macro). Na targecie API ma tworzyć z góry ustaloną
+ * liczbę pól w tabelach (bo przecież wiemy ile każdy node ma wejść
+ * i wyjść podłączonych.
+ */
 
 void fibonacci ()
 {
@@ -63,31 +37,25 @@ void fibonacci ()
 
         // c2 górne
         flow::Arc a1 (0);
-        flow::Port p1 (1);
-        p1.arcs[0] = &a1;
-        c2.outputs[0] = &p1;
+        c2.addOutput (0, &a1);
 
         // c1 dolne
         flow::Arc a2 (1);
         flow::Arc a3 (1);
-        flow::Port p2 (2);
-        p2.arcs[0] = &a2;
-        p2.arcs[1] = &a3;
-        c1.outputs[0] = &p2;
+        c1.addOutput (0, &a3);
+        c1.addOutput (0, &a2);
 
         // add
         flow::Arc a4;
         flow::Arc a5 (1);
-        flow::Port p3 (2);
-        p3.arcs[0] = &a4;
-        p3.arcs[1] = &a5;
-        a.outputs[0] = &p3;
+        a.addOutput (0, &a4);
+        a.addOutput (0, &a5);
 
-        c1.inputs[0] = &a4;
-        c2.inputs[0] = &a2;
-        a.inputs[0] = &a1;
-        a.inputs[1] = &a3;
-        l.input = &a5;
+        c1.setInput (0, &a4);
+        c2.setInput (0, &a2);
+        a.setInput (0, &a1);
+        a.setInput (1, &a3);
+        l.setInput (0, &a5);
 
         program.run ();
 }

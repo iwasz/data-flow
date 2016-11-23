@@ -14,13 +14,23 @@
 namespace flow {
 
 class Arc;
+#define MAX_ARCS_PER_PORT 10
 
 /**
  * @brief The Port class
  */
 class Port {
 public:
+
+        // Runtime/dynamic API, not used on µC.
+        Port () : arcNo (0), arcs (new Arc *[MAX_ARCS_PER_PORT]) {}
+        void addArc (Arc *a);
+        void removeArc (Arc *a);
+
+        // Static API used on µC
         Port (uint8_t arcNo) : arcNo (arcNo), arcs (new Arc *[arcNo]) {}
+
+        // Rest of the class
         ~Port () { delete[] arcs; }
 
         bool isAllFree () const;

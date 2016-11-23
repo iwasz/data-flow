@@ -17,12 +17,12 @@ namespace flow {
 
 class Add : public AbstractNode<2, 1, RequireAllFull<2>> {
 public:
-        void process () { outputs[0]->put (inputs[0]->get () + inputs[1]->get ()); }
+        void process () { outputs[0].put (inputs[0]->get () + inputs[1]->get ()); }
 };
 
 class Copy : public AbstractNode<1, 1, RequireAllFull<1>> {
 public:
-        void process () { outputs[0]->put (inputs[0]->get ()); }
+        void process () { outputs[0].put (inputs[0]->get ()); }
 };
 
 } // namespace

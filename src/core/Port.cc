@@ -8,6 +8,7 @@
 
 #include "Port.h"
 #include "Arc.h"
+#include "Exception.h"
 
 namespace flow {
 
@@ -27,4 +28,15 @@ void Port::put (int v)
                 arcs[i]->put (v);
         }
 }
+
+void Port::addArc (Arc *a)
+{
+        if (arcNo + 1 >= MAX_ARCS_PER_PORT) {
+                throw Exception ("To many arcs in port");
+        }
+
+        arcs[arcNo++] = a;
+}
+
+void Port::removeArc (Arc *a) {throw Exception ("Not implemented"); }
 }

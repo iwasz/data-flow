@@ -18,10 +18,12 @@ class Source : public INode {
 public:
         virtual ~Source () {}
         bool inputsOk () const { return true; }
-        bool outputsOk () const { return output->isAllFree (); }
+        bool outputsOk () const { return output.isAllFree (); }
+        void addOutput (int, Arc *a) { output.addArc (a); }
+        void setInput (int, Arc *) {}
 
         // protected:
-        Port *output;
+        Port output;
 };
 
 } // namespace

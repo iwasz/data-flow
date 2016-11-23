@@ -32,6 +32,9 @@ public:
                 full = true;
         }
 
+        // For debugging
+        int getValue () const { return value; }
+
 private:
         int value;
         bool full;

@@ -34,10 +34,10 @@ template <> struct RequireAllFull<1> {
 /*****************************************************************************/
 
 template <uint8_t OUTPUTS_NO> struct RequireAllFree {
-        static bool check (Port *const *outputs)
+        static bool check (Port const *outputs)
         {
                 for (int i = 0; i < OUTPUTS_NO; ++i) {
-                        if (!outputs[i]->isAllFree ()) {
+                        if (!outputs[i].isAllFree ()) {
                                 return false;
                         }
                 }
@@ -47,7 +47,7 @@ template <uint8_t OUTPUTS_NO> struct RequireAllFree {
 };
 
 template <> struct RequireAllFree<1> {
-        static bool check (Port *const *inputs) { return inputs[0]->isAllFree (); }
+        static bool check (Port const *inputs) { return inputs[0].isAllFree (); }
 };
 
 } // namespace

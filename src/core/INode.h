@@ -13,11 +13,19 @@
 
 namespace flow {
 
+class Arc;
+
+/**
+ * @brief The INode struct
+ */
 struct INode {
         virtual ~INode () {}
         virtual void process () = 0;
         virtual bool inputsOk () const = 0;
         virtual bool outputsOk () const = 0;
+        virtual void addOutput (int i, Arc *a) = 0;
+        virtual void setInput (int i, Arc *a) = 0;
+
 };
 
 typedef std::vector<INode *> NodeVector;

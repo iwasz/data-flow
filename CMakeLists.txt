@@ -78,6 +78,8 @@ SET (SOURCES
         "src/core/CommonSinks.cc"
         "src/core/CommonSources.h"
         "src/core/CommonSources.cc"
+        "src/core/Exception.h"
+        "src/core/Exception.cc"
         "src/Program.h"
         "src/Program.cc"
 )

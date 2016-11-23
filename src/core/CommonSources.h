@@ -18,7 +18,7 @@ class Const : public Source {
 public:
         Const (int i) : value (i) {}
         virtual ~Const () {}
-        void process () { output->put (value); }
+        void process () { output.put (value); }
 
 private:
         int value;

@@ -6,26 +6,34 @@
  *  ~~~~~~~~~                                                               *
  ****************************************************************************/
 
-#ifndef DATA_FLOW_SINK_H
-#define DATA_FLOW_SINK_H
+#ifndef DATAFLOW_EXCEPTION_H_
+#define DATAFLOW_EXCEPTION_H_
 
-#include "INode.h"
-#include "Arc.h"
+#include <exception>
+#include <string>
 
 namespace flow {
 
-class Sink : public INode {
+/**
+ *
+ */
+class Exception : public std::exception {
 public:
-        virtual ~Sink () {}
-        bool inputsOk () const { return input->isFull (); }
-        bool outputsOk () const { return true; }
-        void addOutput (int, Arc *a) {}
-        void setInput (int, Arc *a) { input = a; }
 
-        // protected:
-        Arc *input;
+        /**
+         * Inicjuje wyjątek napisem.
+         */
+        Exception (std::string const &s = "") : message (s) {}
+        virtual ~Exception () throw () {}
+
+        const char* what() const throw () { return message.c_str(); }
+
+private:
+
+        std::string message;
+
 };
 
 } // namespace
 
-#endif // SINK_H
+#	endif /* EXCEPTION_H_ */
