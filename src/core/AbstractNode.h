@@ -9,14 +9,15 @@
 #ifndef DATA_FLOW_ABSTRACTNODE_H
 #define DATA_FLOW_ABSTRACTNODE_H
 
-#include <cstdint>
-#include "IOPolicy.h"
-#include "INode.h"
 #include "Exception.h"
+#include "INode.h"
+#include "IOPolicy.h"
+#include <ReflectionParserAnnotation.h>
+#include <cstdint>
 
 namespace flow {
 
-template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy = RequireAllFull<INPUTS_NO>> class AbstractNode : public INode {
+template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy = RequireAllFull<INPUTS_NO>> class __tiliae_no_reflect__ AbstractNode : public INode {
 public:
         virtual ~AbstractNode () {}
         virtual bool inputsOk () const { return InputStrategy::check (inputs); }

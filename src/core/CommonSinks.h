@@ -9,20 +9,20 @@
 #ifndef COMMONSINKS_H
 #define COMMONSINKS_H
 
+#include "Arc.h"
+#include "Port.h"
+#include "Sink.h"
 #include <iostream>
 #include <unistd.h>
-#include "Sink.h"
-#include "Port.h"
-#include "Arc.h"
 
 namespace flow {
 
-class Console : public Sink {
+class __tiliae_reflect__ Console : public Sink {
 public:
         virtual ~Console () {}
         void process ()
         {
-                sleep (1);
+                // sleep (1);
                 std::cerr << input->get () << std::endl;
         }
 };

@@ -9,12 +9,12 @@
 #ifndef COMMONSOURCES_H
 #define COMMONSOURCES_H
 
-#include "Source.h"
 #include "Port.h"
+#include "Source.h"
 
 namespace flow {
 
-class Const : public Source {
+class __tiliae_reflect__ Const : public Source {
 public:
         Const (int i) : value (i) {}
         virtual ~Const () {}

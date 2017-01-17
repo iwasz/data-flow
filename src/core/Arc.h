@@ -9,11 +9,13 @@
 #ifndef DATA_FLOW_ARC_H
 #define DATA_FLOW_ARC_H
 
+#include <ReflectionParserAnnotation.h>
+
 namespace flow {
 
 // TODO other types as well (along with strings).
 // template <typename T>
-class Arc {
+class __tiliae_reflect__ Arc {
 public:
         Arc () : full (false) {}
         Arc (int i) : value (i), full (true) {}
