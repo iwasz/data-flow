@@ -14,7 +14,7 @@
 
 namespace flow {
 
-class Sink : public INode {
+class __tiliae_no_reflect__ Sink : public INode {
 public:
         virtual ~Sink () {}
         bool inputsOk () const { return input->isFull (); }
