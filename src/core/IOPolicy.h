@@ -18,7 +18,7 @@ template <uint8_t INPUTS_NO> struct RequireAllFull {
         static bool check (Arc *const *inputs)
         {
                 for (int i = 0; i < INPUTS_NO; ++i) {
-                        if (!inputs[i]->isFull ()) {
+                        if (!inputs[i] || !inputs[i]->isFull ()) {
                                 return false;
                         }
                 }

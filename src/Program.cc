@@ -11,14 +11,21 @@
 
 namespace flow {
 
+void Program::step ()
+{
+        for (flow::INode *node : nodes) {
+                if (node->inputsOk () && node->outputsOk ()) {
+                        node->process ();
+                }
+        }
+}
+
+/*****************************************************************************/
+
 void Program::run ()
 {
         while (true) {
-                for (flow::INode *node : nodes) {
-                        if (node->inputsOk () && node->outputsOk ()) {
-                                node->process ();
-                        }
-                }
+                step ();
         }
 }
 

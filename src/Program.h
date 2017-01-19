@@ -18,6 +18,7 @@ class __tiliae_reflect__ Program {
 public:
         void addNode (INode *n) { nodes.push_back (n); }
         void run ();
+        void step ();
 
 private:
         NodeVector nodes;

@@ -22,7 +22,6 @@ public:
         virtual ~Console () {}
         void process ()
         {
-                // sleep (1);
                 std::cerr << input->get () << std::endl;
         }
 };
