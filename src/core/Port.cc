@@ -15,7 +15,7 @@ namespace flow {
 bool Port::isAllFree () const
 {
         for (int i = 0; i < arcNo; ++i) {
-                if (arcs[i]->isFull ()) {
+                if (arcs[i] && arcs[i]->isFull ()) {
                         return false;
                 }
         }
@@ -38,5 +38,5 @@ void Port::addArc (Arc *a)
         arcs[arcNo++] = a;
 }
 
-void Port::removeArc (Arc *a) {throw Exception ("Not implemented"); }
+void Port::removeArc (Arc *a) { throw Exception ("Not implemented"); }
 }

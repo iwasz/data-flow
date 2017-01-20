@@ -28,7 +28,7 @@ template <uint8_t INPUTS_NO> struct RequireAllFull {
 };
 
 template <> struct RequireAllFull<1> {
-        static bool check (Arc *const *inputs) { return inputs[0]->isFull (); }
+        static bool check (Arc *const *inputs) { return inputs[0] && inputs[0]->isFull (); }
 };
 
 /*****************************************************************************/

@@ -14,11 +14,13 @@
 #include "IOPolicy.h"
 #include <ReflectionParserAnnotation.h>
 #include <cstdint>
+#include <memory.h>
 
 namespace flow {
 
 template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy = RequireAllFull<INPUTS_NO>> class __tiliae_no_reflect__ AbstractNode : public INode {
 public:
+        AbstractNode ();
         virtual ~AbstractNode () {}
         virtual bool inputsOk () const { return InputStrategy::check (inputs); }
         virtual bool outputsOk () const { return RequireAllFree<OUTPUTS_NO>::check (outputs); }
@@ -29,6 +31,11 @@ public:
         Arc *inputs[INPUTS_NO];
         Port outputs[OUTPUTS_NO];
 };
+
+template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy> AbstractNode<INPUTS_NO, OUTPUTS_NO, InputStrategy>::AbstractNode ()
+{
+        bzero (inputs, sizeof (Arc *) * INPUTS_NO);
+}
 
 template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy> void AbstractNode<INPUTS_NO, OUTPUTS_NO, InputStrategy>::addOutput (int i, Arc *a)
 {

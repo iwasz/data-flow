@@ -19,21 +19,18 @@ namespace flow {
  */
 class Exception : public std::exception {
 public:
-
         /**
          * Inicjuje wyjątek napisem.
          */
         Exception (std::string const &s = "") : message (s) {}
         virtual ~Exception () throw () {}
 
-        const char* what() const throw () { return message.c_str(); }
+        const char *what () const throw () { return message.c_str (); }
 
 private:
-
         std::string message;
-
 };
 
 } // namespace
 
-#	endif /* EXCEPTION_H_ */
+#endif /* EXCEPTION_H_ */
