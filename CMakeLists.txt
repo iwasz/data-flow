@@ -53,6 +53,7 @@ LIST (APPEND SOURCES
         "src/core/Port.cc"
         "src/core/Port.h"
         "src/core/INode.h"
+        "src/core/INode.cc"
         "src/core/IOPolicy.h"
         "src/core/AbstractNode.h"
         "src/core/Source.h"

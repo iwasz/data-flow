@@ -10,6 +10,7 @@
 #define DATA_FLOW_PORT_H
 
 #include <cstdint>
+#include <vector>
 #include <memory.h>
 
 namespace flow {
@@ -22,13 +23,12 @@ class Arc;
  */
 class Port {
 public:
-        // Static API used on µC
-        // Port (uint8_t arcNo) : arcNo (arcNo), arcs (new Arc *[arcNo]) { bzero (arcs, sizeof (Arc *) * arcNo); }
-
-        // Runtime/dynamic API, not used on µC.
+#ifndef SMALL_FOOTPRINT
+        Port () {}
+#else
         Port () : arcNo (0), arcs (new Arc *[MAX_ARCS_PER_PORT]) { bzero (arcs, sizeof (Arc *) * MAX_ARCS_PER_PORT); }
+#endif
         void addArc (Arc *a);
-        void removeArc (Arc *a);
 
         // Rest of the class
         ~Port () { /*delete[] arcs;*/}
@@ -36,9 +36,18 @@ public:
         bool isAllFree () const;
         void put (int i);
 
-        // private:
+#ifndef SMALL_FOOTPRINT
+        void disconnect (Arc *a);
+#endif
+
+//private:
+
+#ifndef SMALL_FOOTPRINT
+        std::vector <Arc *> arcs;
+#else
         uint8_t arcNo;
         Arc **arcs;
+#endif
 };
 
 } // namespace
