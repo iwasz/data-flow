@@ -15,11 +15,6 @@
 
 namespace flow {
 
-class __tiliae_reflect__ Add : public AbstractNode<2, 1, RequireAllFull<2>> {
-public:
-        void process () { outputs[0].put (inputs[0]->get () + inputs[1]->get ()); }
-};
-
 class __tiliae_reflect__ Copy : public AbstractNode<1, 1, RequireAllFull<1>> {
 public:
         void process () { outputs[0].put (inputs[0]->get ()); }

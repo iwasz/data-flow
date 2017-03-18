@@ -58,6 +58,7 @@ LIST (APPEND SOURCES
         "src/core/AbstractNode.h"
         "src/core/Source.h"
         "src/core/Sink.h"
+        "src/core/MathNodes.h"
         "src/core/CommonNodes.h"
         "src/core/CommonNodes.cc"
         "src/core/CommonSinks.h"

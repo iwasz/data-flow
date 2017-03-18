@@ -17,6 +17,7 @@
 #include "Source.h"
 #include "Sink.h"
 #include "CommonNodes.h"
+#include "MathNodes.h"
 #include "CommonSinks.h"
 #include "CommonSources.h"
 
