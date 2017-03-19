@@ -33,6 +33,9 @@ struct __tiliae_reflect__ INode : public Core::Object {
         virtual bool inputsOk () const = 0;
         virtual bool outputsOk () const = 0;
 
+        /// Resets internal state if Node has one.
+        virtual void reset () = 0;
+
         virtual void addOutput (int i, Arc *a) = 0;
         virtual void setInput (int i, Arc *a) = 0;
 

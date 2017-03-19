@@ -6,8 +6,8 @@
  *  ~~~~~~~~~                                                               *
  ****************************************************************************/
 
-#ifndef COMMONSOURCES_H
-#define COMMONSOURCES_H
+#ifndef COMMON_SOURCES_H
+#define COMMON_SOURCES_H
 
 #include "Port.h"
 #include "Source.h"
@@ -19,17 +19,19 @@ public:
         Const () : value (0) {}
         Const (int i) : value (i) {}
         virtual ~Const () {}
-        void process () { output.put (value); }
+        void process ();
 
         int getValue () const { return value; }
         void setValue (int value) { this->value = value; }
 
         bool isRepeat () const { return repeat; }
         void setRepeat (bool value) { repeat = value; }
+        virtual void reset () { fired = false; }
 
 private:
         int value;
-        bool repeat;
+        bool repeat = true;
+        bool fired = false;
 };
 
 } // namespace

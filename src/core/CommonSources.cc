@@ -8,4 +8,14 @@
 
 #include "CommonSources.h"
 
+namespace flow {
 
+void Const::process ()
+{
+        if (repeat || (!repeat && !fired)) {
+                output.put (value);
+                fired = true;
+        }
+}
+
+} // namespace

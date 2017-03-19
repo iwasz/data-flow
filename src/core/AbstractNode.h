@@ -28,6 +28,8 @@ public:
 
         void addOutput (int i, Arc *a);
         void setInput (int i, Arc *a);
+        virtual void reset () {}
+
 
 #ifndef SMALL_FOOTPRINT
         void disconnectOutput (Arc *a);

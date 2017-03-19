@@ -33,6 +33,7 @@ public:
 
         void run ();
         void step ();
+        void reset ();
 
 private:
         NodeVector nodes;

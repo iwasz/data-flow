@@ -21,6 +21,7 @@ public:
         bool outputsOk () const { return true; }
         void addOutput (int, Arc *a) {}
         void setInput (int, Arc *a) { input = a; }
+        virtual void reset () {}
 
 #ifndef SMALL_FOOTPRINT
         void disconnectOutput (Arc *a) {}

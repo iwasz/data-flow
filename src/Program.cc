@@ -29,4 +29,13 @@ void Program::run ()
         }
 }
 
+/*****************************************************************************/
+
+void Program::reset ()
+{
+        for (flow::INode *node : nodes) {
+                node->reset ();
+        }
+}
+
 } // namespace
