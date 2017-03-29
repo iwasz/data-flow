@@ -5,7 +5,7 @@
  */
 
 #include <reflection/Reflection.h>
-#include "/home/iwasz/workspace/data-flow/src/Reflection_input.cc"
+#include "Reflection_input.cc"
 
 namespace {
 using namespace Core;
@@ -52,6 +52,7 @@ void createReflectionDatabase_dataFlow ()
 			clazz->addMethod (new Method ("process", createMethodWrapper (&flow::INode::process)));
 			clazz->addMethod (new Method ("inputsOk", createMethodWrapper (&flow::INode::inputsOk)));
 			clazz->addMethod (new Method ("outputsOk", createMethodWrapper (&flow::INode::outputsOk)));
+			clazz->addMethod (new Method ("reset", createMethodWrapper (&flow::INode::reset)));
 			clazz->addMethod (new Method ("addOutput", createMethodWrapper (&flow::INode::addOutput)));
 			clazz->addMethod (new Method ("setInput", createMethodWrapper (&flow::INode::setInput)));
 			clazz->addMethod (new Method ("disconnectOutput", createMethodWrapper (&flow::INode::disconnectOutput)));
@@ -71,6 +72,7 @@ void createReflectionDatabase_dataFlow ()
 			clazz->addMethod (new Method ("outputsOk", createMethodWrapper (&flow::Source::outputsOk)));
 			clazz->addMethod (new Method ("addOutput", createMethodWrapper (&flow::Source::addOutput)));
 			clazz->addMethod (new Method ("setInput", createMethodWrapper (&flow::Source::setInput)));
+			clazz->addMethod (new Method ("reset", createMethodWrapper (&flow::Source::reset)));
 			clazz->addMethod (new Method ("disconnectOutput", createMethodWrapper (&flow::Source::disconnectOutput)));
 			clazz->addMethod (new Method ("disconnectInput", createMethodWrapper (&flow::Source::disconnectInput)));
 		}
@@ -149,6 +151,7 @@ void createReflectionDatabase_dataFlow ()
 			clazz->addMethod (new Method ("setValue", createMethodWrapper (&flow::Const::setValue)));
 			clazz->addMethod (new Method ("isRepeat", createMethodWrapper (&flow::Const::isRepeat)));
 			clazz->addMethod (new Method ("setRepeat", createMethodWrapper (&flow::Const::setRepeat)));
+			clazz->addMethod (new Method ("reset", createMethodWrapper (&flow::Const::reset)));
 		}
 	}
 	{
@@ -162,6 +165,7 @@ void createReflectionDatabase_dataFlow ()
 			clazz->addMethod (new Method ("addNode", createMethodWrapper (&flow::Program::addNode)));
 			clazz->addMethod (new Method ("run", createMethodWrapper (&flow::Program::run)));
 			clazz->addMethod (new Method ("step", createMethodWrapper (&flow::Program::step)));
+			clazz->addMethod (new Method ("reset", createMethodWrapper (&flow::Program::reset)));
 		}
 	}
 }
