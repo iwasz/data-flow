@@ -45,7 +45,7 @@ protected:
 
 template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy> AbstractNode<INPUTS_NO, OUTPUTS_NO, InputStrategy>::AbstractNode ()
 {
-        bzero (inputs, sizeof (Arc *) * INPUTS_NO);
+        memset (inputs, 0, sizeof (Arc *) * INPUTS_NO);
 }
 
 /*****************************************************************************/
