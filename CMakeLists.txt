@@ -14,6 +14,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11" CACHE INTERNAL "cxx co
 
 SET(CMAKE_C_FLAGS_RELEASE "-DNDEBUG" CACHE INTERNAL "c release compiler flags")
 SET(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG" CACHE INTERNAL "cxx release compiler flags")
+SET (WITH_PARSER               ON CACHE BOOL "")
 
 ADD_DEFINITIONS (-DBOOST_LOG_DYN_LINK)
 
@@ -38,7 +39,9 @@ link_directories(${TILIAE_LIBRARY_DIRS})
 # +-------------------------------+
 # | Generate reflection database. |
 # +-------------------------------+
+IF (WITH_PARSER)
 TILIAE_PARSE ("${PROJECT_SOURCE_DIR}/../tiliae/build/parser/tiliaeparser" "dataFlow" "src/Reflection_input.cc" "src/Reflection_output_data_flow.cc.h")
+ENDIF ()
 LIST (APPEND SOURCES "src/Reflection_input.cc")
 LIST (APPEND SOURCES "src/Reflection_output_data_flow.cc.h")
 
@@ -76,7 +79,9 @@ INCLUDE_DIRECTORIES (src)
 INCLUDE_DIRECTORIES ("/usr/include/libcxxabi")
 
 add_library (dataflow STATIC ${SOURCES})
+IF (WITH_CPPABI)
 TARGET_LINK_LIBRARIES (dataflow c++abi)
+ENDIF ()
 
 SET (SOURCES "src/main.cc")
 add_executable (${CMAKE_PROJECT_NAME} ${SOURCES})
