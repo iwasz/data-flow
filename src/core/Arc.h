@@ -19,11 +19,28 @@ struct INode;
 // template <typename T>
 class __tiliae_reflect__ Arc {
 public:
-        Arc () : full (false) {}
-        Arc (int i) : value (i), full (true) {}
+        Arc () : value (0), initialValue (0), full (false), initialFull (false) {}
 #ifndef SMALL_FOOTPRINT
         ~Arc () { disconnect (); }
 #endif
+
+        /// Sets initial value and makes this Arc full.
+        void init (int i) __tiliae_no_reflect__
+        {
+                value = initialValue = i;
+                full = initialFull = true;
+        }
+
+        /// Clears initial value and makes this Arc empty.
+        void clear () { full = initialFull = false; }
+
+        /// Restores the initial value.
+        void reset ()
+        {
+                value = initialValue;
+                full = initialFull;
+        }
+
         bool isFull () const { return full; }
 
         int get ()
@@ -54,7 +71,10 @@ public:
 
 private:
         int value;
+        int initialValue;
+
         bool full;
+        bool initialFull;
 #ifndef SMALL_FOOTPRINT
         INode *nodeInputSide = nullptr;
         INode *nodeOutputSide = nullptr;

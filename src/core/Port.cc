@@ -65,6 +65,14 @@ void Port::addArc (Arc *a)
 
 #ifndef SMALL_FOOTPRINT
 void Port::disconnect (Arc *a) { arcs.erase (std::remove (arcs.begin (), arcs.end (), a), arcs.end ()); }
+
+void Port::reset ()
+{
+        for (Arc *a : arcs) {
+                a->reset ();
+        }
+}
+
 #endif
 
 } // namespace

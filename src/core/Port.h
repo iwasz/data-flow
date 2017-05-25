@@ -38,6 +38,7 @@ public:
 
 #ifndef SMALL_FOOTPRINT
         void disconnect (Arc *a);
+        void reset ();
 #endif
 
 //private:

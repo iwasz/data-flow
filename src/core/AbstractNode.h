@@ -28,8 +28,8 @@ public:
 
         void addOutput (int i, Arc *a);
         void setInput (int i, Arc *a);
-        virtual void reset () {}
 
+        virtual void reset ();
 
 #ifndef SMALL_FOOTPRINT
         void disconnectOutput (Arc *a);
@@ -92,6 +92,20 @@ template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy> void Ab
         }
         a->setNodeOutputSide (nullptr);
 }
+
+template <uint8_t INPUTS_NO, uint8_t OUTPUTS_NO, typename InputStrategy> void AbstractNode<INPUTS_NO, OUTPUTS_NO, InputStrategy>::reset ()
+{
+        for (int i = 0; i < INPUTS_NO; ++i) {
+                if (inputs[i]) {
+                        inputs[i]->reset ();
+                }
+        }
+
+        for (int i = 0; i < OUTPUTS_NO; ++i) {
+                outputs[i].reset ();
+        }
+}
+
 #endif
 } // namespace
 

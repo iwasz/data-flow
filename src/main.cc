@@ -6,8 +6,8 @@
  *  ~~~~~~~~~                                                               *
  ****************************************************************************/
 
-#include "core/Core.h"
 #include "Program.h"
+#include "core/Core.h"
 
 /*
  * Dynamiczne API, czyli ułatwienia, które stosujemy na hoście :
@@ -36,18 +36,22 @@ void fibonacci ()
         program.addNode (&c2);
 
         // c2 górne
-        flow::Arc a1 (0);
+        flow::Arc a1;
+        a1.init (0);
         c2.addOutput (0, &a1);
 
         // c1 dolne
-        flow::Arc a2 (1);
-        flow::Arc a3 (1);
+        flow::Arc a2;
+        a2.init (1);
+        flow::Arc a3;
+        a3.init (1);
         c1.addOutput (0, &a3);
         c1.addOutput (0, &a2);
 
         // add
         flow::Arc a4;
-        flow::Arc a5 (1);
+        flow::Arc a5;
+        a5.init (1);
         a.addOutput (0, &a4);
         a.addOutput (0, &a5);
 
