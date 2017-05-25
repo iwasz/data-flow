@@ -26,7 +26,8 @@ public:
 
         bool isRepeat () const { return repeat; }
         void setRepeat (bool value) { repeat = value; }
-        virtual void reset () { fired = false; }
+
+        virtual void reset ();
 
 private:
         int value;

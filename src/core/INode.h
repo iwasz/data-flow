@@ -43,6 +43,7 @@ struct __tiliae_reflect__ INode : public Core::Object {
         virtual void disconnectOutput (Arc *a) = 0;
         virtual void disconnectInput (Arc *a) = 0;
         virtual void setProgram (Program *value) { program = value; }
+
 private:
         Program *program = nullptr;
 #endif
@@ -50,7 +51,6 @@ private:
 
 #ifndef SMALL_FOOTPRINT
 typedef std::vector<INode *> NodeVector;
-
 #endif
 
 } // namespace

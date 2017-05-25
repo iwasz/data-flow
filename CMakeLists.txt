@@ -73,6 +73,7 @@ LIST (APPEND SOURCES
         "src/core/Exception.cc"
         "src/Program.h"
         "src/Program.cc"
+        "src/core/IFlowObserver.h"
 )
 
 # Local includes (inside project).
@@ -91,4 +92,5 @@ TARGET_LINK_LIBRARIES (${CMAKE_PROJECT_NAME} c++abi)
 ENDIF ()
 TARGET_LINK_LIBRARIES (${CMAKE_PROJECT_NAME} dataflow)
 TARGET_LINK_LIBRARIES (${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES (${CMAKE_PROJECT_NAME} ${TILIAE_LIBRARIES})
 

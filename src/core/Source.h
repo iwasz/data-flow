@@ -22,7 +22,7 @@ public:
         bool outputsOk () const { return output.isAllFree (); }
         void addOutput (int, Arc *a) { output.addArc (a); }
         void setInput (int, Arc *) {}
-        virtual void reset () {}
+        virtual void reset () { output.reset (); }
 
 #ifndef SMALL_FOOTPRINT
         void disconnectOutput (Arc *a)

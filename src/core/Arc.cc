@@ -22,6 +22,21 @@ void Arc::disconnect ()
                 nodeOutputSide->disconnectOutput (this);
         }
 }
+
+/*****************************************************************************/
+
+void Arc::notify ()
+{
+        if (observer) {
+                if (full) {
+                        observer->onValueChange (Core::Variant (value));
+                }
+                else {
+                        observer->onValueChange (Core::Variant ());
+                }
+        }
+}
+
 #endif
 
 } // namespace flow

@@ -13,10 +13,17 @@ namespace flow {
 
 void Program::step ()
 {
-        for (flow::INode *node : nodes) {
-                if (node->inputsOk () && node->outputsOk ()) {
-                        node->process ();
-                }
+        if (nodes.empty ()) {
+                return;
+        }
+
+        if (lastRun == nodes.end ()) {
+                lastRun = nodes.begin ();
+        }
+
+        flow::INode *node = *lastRun++;
+        if (node->inputsOk () && node->outputsOk ()) {
+                node->process ();
         }
 }
 
@@ -24,6 +31,8 @@ void Program::step ()
 
 void Program::run ()
 {
+        lastRun = nodes.begin ();
+
         while (true) {
                 step ();
         }

@@ -9,6 +9,7 @@
 #ifndef DATA_FLOW_ARC_H
 #define DATA_FLOW_ARC_H
 
+#include "IFlowObserver.h"
 #include <ReflectionParserAnnotation.h>
 
 namespace flow {
@@ -29,16 +30,22 @@ public:
         {
                 value = initialValue = i;
                 full = initialFull = true;
+                notify ();
         }
 
         /// Clears initial value and makes this Arc empty.
-        void clear () { full = initialFull = false; }
+        void clear ()
+        {
+                full = initialFull = false;
+                notify ();
+        }
 
         /// Restores the initial value.
         void reset ()
         {
                 value = initialValue;
                 full = initialFull;
+                notify ();
         }
 
         bool isFull () const { return full; }
@@ -46,6 +53,7 @@ public:
         int get ()
         {
                 full = false;
+                notify ();
                 return value;
         }
 
@@ -53,6 +61,7 @@ public:
         {
                 value = i;
                 full = true;
+                notify ();
         }
 
         // For debugging
@@ -65,9 +74,14 @@ public:
         INode *getNodeOutputSide () const { return nodeOutputSide; }
         void setNodeOutputSide (INode *value) { nodeOutputSide = value; }
 
+        void setObserver (IFlowObserver *o) { observer = o; }
+
         /// Dosconnects both sides
         void disconnect ();
 #endif
+
+private:
+        void notify ();
 
 private:
         int value;
@@ -78,6 +92,7 @@ private:
 #ifndef SMALL_FOOTPRINT
         INode *nodeInputSide = nullptr;
         INode *nodeOutputSide = nullptr;
+        IFlowObserver *observer = nullptr;
 #endif
 };
 

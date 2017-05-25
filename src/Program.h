@@ -21,11 +21,17 @@ namespace flow {
 class __tiliae_reflect__ Program {
 public:
 #ifndef SMALL_FOOTPRINT
-        void removeNode (INode *n) { nodes.erase (std::remove (nodes.begin (), nodes.end (), n), nodes.end ()); }
+        void removeNode (INode *n)
+        {
+                nodes.erase (std::remove (nodes.begin (), nodes.end (), n), nodes.end ());
+                lastRun = nodes.begin ();
+        }
+
         void addNode (INode *n)
         {
                 nodes.push_back (n);
                 n->setProgram (this);
+                lastRun = nodes.begin ();
         }
 #else
         void addNode (INode *n) { nodes.push_back (n); }
@@ -37,6 +43,7 @@ public:
 
 private:
         NodeVector nodes;
+        NodeVector::iterator lastRun;
 };
 
 } // namespace
