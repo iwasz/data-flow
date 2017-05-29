@@ -64,8 +64,9 @@ public:
                 notify ();
         }
 
-        // For debugging
         int getValue () const { return value; }
+        int getInitialValue () const { return initialValue; }
+        int getInitialFull () const { return initialFull; }
 
 #ifndef SMALL_FOOTPRINT
         INode *getNodeInputSide () const { return nodeInputSide; }
