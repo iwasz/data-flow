@@ -36,9 +36,13 @@ public:
         void disconnectInput (Arc *a);
 #endif
 
+        virtual void setObserver (flow::IFlowObserver *o) { this->observer = o; }
+        virtual IFlowObserver *getObserver () { return observer; }
+
 protected:
         Arc *inputs[INPUTS_NO];
         Port outputs[OUTPUTS_NO];
+        flow::IFlowObserver *observer = nullptr;
 };
 
 /*****************************************************************************/

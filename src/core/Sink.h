@@ -9,36 +9,36 @@
 #ifndef DATA_FLOW_SINK_H
 #define DATA_FLOW_SINK_H
 
+#include "AbstractNode.h"
 #include "Arc.h"
-#include "INode.h"
 
 namespace flow {
 
-class __tiliae_no_reflect__ Sink : public INode {
+class __tiliae_no_reflect__ Sink : public AbstractNode<1, 0> {
 public:
         virtual ~Sink () {}
-        bool inputsOk () const { return input && input->isFull (); }
-        bool outputsOk () const { return true; }
-        void addOutput (int, Arc *a) {}
-        void setInput (int, Arc *a) { input = a; }
-        virtual void reset ()
-        {
-                if (input) {
-                        input->reset ();
-                }
-        }
+        //        bool inputsOk () const { return input && input->isFull (); }
+        //        bool outputsOk () const { return true; }
+        //        void addOutput (int, Arc *a) {}
+        //        void setInput (int, Arc *a) { input = a; }
+        //        virtual void reset ()
+        //        {
+        //                if (input) {
+        //                        input->reset ();
+        //                }
+        //        }
 
-#ifndef SMALL_FOOTPRINT
-        void disconnectOutput (Arc *a) {}
-        void disconnectInput (Arc *a)
-        {
-                a->setNodeInputSide (nullptr);
-                input = nullptr;
-        }
-#endif
+        //#ifndef SMALL_FOOTPRINT
+        //        void disconnectOutput (Arc *a) {}
+        //        void disconnectInput (Arc *a)
+        //        {
+        //                a->setNodeInputSide (nullptr);
+        //                input = nullptr;
+        //        }
+        //#endif
 
-        // protected:
-        Arc *input = nullptr;
+        //        // protected:
+        //        Arc *input = nullptr;
 };
 
 } // namespace

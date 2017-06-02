@@ -13,7 +13,7 @@ namespace flow {
 void Const::process ()
 {
         if (repeat || (!repeat && !fired)) {
-                output.put (value);
+                outputs[0].put (value);
                 fired = true;
         }
 }

@@ -9,6 +9,7 @@
 #ifndef DATA_FLOW_INODE_H
 #define DATA_FLOW_INODE_H
 
+#include "IFlowObserver.h"
 #include <ReflectionParserAnnotation.h>
 #include <core/Object.h>
 #include <vector>
@@ -43,6 +44,9 @@ struct __tiliae_reflect__ INode : public Core::Object {
         virtual void disconnectOutput (Arc *a) = 0;
         virtual void disconnectInput (Arc *a) = 0;
         virtual void setProgram (Program *value) { program = value; }
+
+        virtual void setObserver (flow::IFlowObserver *o) = 0;
+        virtual IFlowObserver *getObserver () = 0;
 
 private:
         Program *program = nullptr;

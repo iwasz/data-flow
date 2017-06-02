@@ -18,7 +18,7 @@ namespace flow {
  * Implement this interface if you want to receive nitifications about value changes in
  * Arcs and Nodes.
  */
-struct IFlowObserver {
+struct __tiliae_no_reflect__ IFlowObserver {
         virtual ~IFlowObserver () {}
         virtual void onValueChange (Core::Variant const &v) = 0;
 };

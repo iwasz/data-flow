@@ -20,10 +20,7 @@ namespace flow {
 class __tiliae_reflect__ Console : public Sink {
 public:
         virtual ~Console () {}
-        void process ()
-        {
-                std::cerr << input->get () << std::endl;
-        }
+        void process () { std::cerr << inputs[0]->get () << std::endl; }
 };
 
 } // namespace

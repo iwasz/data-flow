@@ -14,6 +14,16 @@ using namespace Reflection;
 void createReflectionDatabase_dataFlow ()
 {
 	{
+		Class *clazz = new Class ("Object", typeid (Core::Object &), new Reflection::PtrDeleter <Core::Object>);
+		if (!Manager::add (clazz)) {
+			delete clazz;
+		}
+		else {
+			clazz->addConstructor (new Constructor (Reflection::ConstructorPointerWrapper2 <Core::Object, void>::Level1Wrapper::newConstructorPointer ()));
+			clazz->addConstructor (new Constructor (Reflection::ConstructorPointerWrapper2 <Core::Object, void>::Level1Wrapper::newConstructorPointer ()));
+		}
+	}
+	{
 		Class *clazz = new Class ("Arc", typeid (flow::Arc &), new Reflection::PtrDeleter <flow::Arc>);
 		if (!Manager::add (clazz)) {
 			delete clazz;
@@ -26,21 +36,14 @@ void createReflectionDatabase_dataFlow ()
 			clazz->addMethod (new Method ("get", createMethodWrapper (&flow::Arc::get)));
 			clazz->addMethod (new Method ("put", createMethodWrapper (&flow::Arc::put)));
 			clazz->addMethod (new Method ("getValue", createMethodWrapper (&flow::Arc::getValue)));
+			clazz->addMethod (new Method ("getInitialValue", createMethodWrapper (&flow::Arc::getInitialValue)));
+			clazz->addMethod (new Method ("getInitialFull", createMethodWrapper (&flow::Arc::getInitialFull)));
 			clazz->addMethod (new Method ("getNodeInputSide", createMethodWrapper (&flow::Arc::getNodeInputSide)));
 			clazz->addMethod (new Method ("setNodeInputSide", createMethodWrapper (&flow::Arc::setNodeInputSide)));
 			clazz->addMethod (new Method ("getNodeOutputSide", createMethodWrapper (&flow::Arc::getNodeOutputSide)));
 			clazz->addMethod (new Method ("setNodeOutputSide", createMethodWrapper (&flow::Arc::setNodeOutputSide)));
+			clazz->addMethod (new Method ("setObserver", createMethodWrapper (&flow::Arc::setObserver)));
 			clazz->addMethod (new Method ("disconnect", createMethodWrapper (&flow::Arc::disconnect)));
-		}
-	}
-	{
-		Class *clazz = new Class ("Object", typeid (Core::Object &), new Reflection::PtrDeleter <Core::Object>);
-		if (!Manager::add (clazz)) {
-			delete clazz;
-		}
-		else {
-			clazz->addConstructor (new Constructor (Reflection::ConstructorPointerWrapper2 <Core::Object, void>::Level1Wrapper::newConstructorPointer ()));
-			clazz->addConstructor (new Constructor (Reflection::ConstructorPointerWrapper2 <Core::Object, void>::Level1Wrapper::newConstructorPointer ()));
 		}
 	}
 	{
@@ -59,6 +62,8 @@ void createReflectionDatabase_dataFlow ()
 			clazz->addMethod (new Method ("disconnectOutput", createMethodWrapper (&flow::INode::disconnectOutput)));
 			clazz->addMethod (new Method ("disconnectInput", createMethodWrapper (&flow::INode::disconnectInput)));
 			clazz->addMethod (new Method ("setProgram", createMethodWrapper (&flow::INode::setProgram)));
+			clazz->addMethod (new Method ("setObserver", createMethodWrapper (&flow::INode::setObserver)));
+			clazz->addMethod (new Method ("getObserver", createMethodWrapper (&flow::INode::getObserver)));
 		}
 	}
 	{
@@ -67,15 +72,6 @@ void createReflectionDatabase_dataFlow ()
 			delete clazz;
 		}
 		else {
-			clazz->addBaseClassName ("INode");
-			clazz->addField (new Field ("output", Reflection::createFieldWrapper (&flow::Source::output)));
-			clazz->addMethod (new Method ("inputsOk", createMethodWrapper (&flow::Source::inputsOk)));
-			clazz->addMethod (new Method ("outputsOk", createMethodWrapper (&flow::Source::outputsOk)));
-			clazz->addMethod (new Method ("addOutput", createMethodWrapper (&flow::Source::addOutput)));
-			clazz->addMethod (new Method ("setInput", createMethodWrapper (&flow::Source::setInput)));
-			clazz->addMethod (new Method ("reset", createMethodWrapper (&flow::Source::reset)));
-			clazz->addMethod (new Method ("disconnectOutput", createMethodWrapper (&flow::Source::disconnectOutput)));
-			clazz->addMethod (new Method ("disconnectInput", createMethodWrapper (&flow::Source::disconnectInput)));
 		}
 	}
 	{
